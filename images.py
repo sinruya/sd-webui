@@ -496,7 +496,9 @@ def save_image_with_geninfo(image, geninfo, filename, extension=None, existing_p
         pnginfo_data = PngImagePlugin.PngInfo()
         for k, v in (existing_pnginfo or {}).items():
             pnginfo_data.add_text(k, str(v))
+        ###
         image.filename = filename.split('.')[0] + '.png'
+        ###
         image.save(filename, format=image_format, quality=opts.jpeg_quality, pnginfo=pnginfo_data)
 
     elif extension.lower() in (".jpg", ".jpeg", ".webp"):
@@ -618,6 +620,10 @@ def save_image(image, path, basename, seed=None, prompt=None, extension='png', i
         fullfn_without_extension = fullfn_without_extension[:max_name_len - max(4, len(extension))]
         params.filename = fullfn_without_extension + extension
         fullfn = params.filename
+    ###
+    now = datetime.datetime.now()
+    fullfn_without_extension += '-' + now.strftime("%Y%m%d%H%M%S")
+    ###
     _atomically_save_image(image, fullfn_without_extension, extension)
 
     image.already_saved_as = fullfn

@@ -3,7 +3,10 @@ import math
 import os
 import sys
 import hashlib
+###
+import datetime
 import zipfile
+###
 
 import torch
 import numpy as np
@@ -624,13 +627,15 @@ def process_images(p: StableDiffusionProcessing) -> Processed:
 
     return res
 
-def zipit(images, index = 0):
-    prefix = len(os.listdir('outputs'))
-    file_name = 'outputs/pi' + str(prefix) + str(index) + '.zip'
+###
+def zipit(images):
+    now = datetime.datetime.now()
+    file_name = 'outputs/pi' + now.strftime("%Y%m%d%H%M%S") + '.zip'
     with zipfile.ZipFile(file_name, 'a') as file:
         for i in images:
             if hasattr(i, 'filename'):
                 file.write(i.filename, os.path.basename(i.filename))
+###
 
 def process_images_inner(p: StableDiffusionProcessing) -> Processed:
     """this is the main loop that both txt2img and img2img use; it calls func_init once inside all the scopes and func_sample once per batch"""
@@ -673,7 +678,9 @@ def process_images_inner(p: StableDiffusionProcessing) -> Processed:
 
     infotexts = []
     output_images = []
+    ###
     next_index = 0
+    ###
 
     with torch.no_grad(), p.sd_model.ema_scope():
         with devices.autocast():
@@ -813,9 +820,10 @@ def process_images_inner(p: StableDiffusionProcessing) -> Processed:
 
             devices.torch_gc()
 
-            zipit(output_images[next_index:], next_index)
+            ###
+            zipit(output_images[next_index:])
             next_index = len(output_images)
-
+            ###
             state.nextjob()
 
         p.color_corrections = None
