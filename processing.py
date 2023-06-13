@@ -629,7 +629,7 @@ def process_images(p: StableDiffusionProcessing) -> Processed:
 
 ###
 def zipit(images):
-    if len(images) >= 4:
+    if len(images) < 4:
         return
 
     now = datetime.datetime.now()
