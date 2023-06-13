@@ -629,6 +629,9 @@ def process_images(p: StableDiffusionProcessing) -> Processed:
 
 ###
 def zipit(images):
+    if len(images) >= 4:
+        return
+
     now = datetime.datetime.now()
     file_name = 'outputs/pi' + now.strftime("%Y%m%d%H%M%S") + '.zip'
     with zipfile.ZipFile(file_name, 'a') as file:
