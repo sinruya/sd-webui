@@ -633,7 +633,7 @@ def zipit(images):
         return
 
     now = datetime.datetime.now()
-    file_name = 'outputs/pi' + now.strftime("%Y%m%d%H%M%S") + '.zip'
+    file_name = 'outputs/pi' + now.strftime("%H%M%S") + '.zip'
     with zipfile.ZipFile(file_name, 'a') as file:
         for i in images:
             if hasattr(i, 'filename'):
