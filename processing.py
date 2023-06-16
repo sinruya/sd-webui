@@ -6,6 +6,7 @@ import hashlib
 ###
 import datetime
 import zipfile
+import shutil
 ###
 
 import torch
@@ -638,6 +639,10 @@ def zipit(images):
         for i in images:
             if hasattr(i, 'filename'):
                 file.write(i.filename, os.path.basename(i.filename))
+
+    target = '/content/drive/MyDrive/pi'
+    if os.path.exists(target):
+        shutil.copy(file_name, target)
 ###
 
 def process_images_inner(p: StableDiffusionProcessing) -> Processed:
