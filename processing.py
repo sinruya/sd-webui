@@ -316,6 +316,23 @@ class StableDiffusionProcessing:
         self.all_prompts = [shared.prompt_styles.apply_styles_to_prompt(x, self.styles) for x in self.all_prompts]
         self.all_negative_prompts = [shared.prompt_styles.apply_negative_styles_to_prompt(x, self.styles) for x in self.all_negative_prompts]
 
+        ###
+        for i in range(len(self.all_prompts)):
+            colors = ['white', 'white', 'white', 'black', 'red', 'green', 'blue', 'yellow', 'orange', 'pink', 'purple', 'gray', 'gold', 'silver', 'copper'] 
+            if 'color1' in self.all_prompts[i]:
+                color1 = random.choice(colors)
+                colors.remove(color1)
+                self.all_prompts[i] = self.all_prompts[i].replace('color1', color1)
+            if 'color2' in self.all_prompts[i]:
+                color2 = random.choice(colors)
+                colors.remove(color2)
+                self.all_prompts[i] = self.all_prompts[i].replace('color2', color2)
+            if 'color3' in self.all_prompts[i]:
+                color3 = random.choice(colors)
+                colors.remove(color3)
+                self.all_prompts[i] = self.all_prompts[i].replace('color3', color3)
+        ###
+
     def get_conds_with_caching(self, function, required_prompts, steps, cache):
         """
         Returns the result of calling function(shared.sd_model, required_prompts, steps)
