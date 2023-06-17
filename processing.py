@@ -331,6 +331,10 @@ class StableDiffusionProcessing:
                 color3 = random.choice(colors)
                 colors.remove(color3)
                 self.all_prompts[i] = self.all_prompts[i].replace('color3', color3)
+            if 'hairx' in self.all_prompts[i]:
+                hairs = ['long', 'short', 'long', 'long', 'short', 'long', 'long', 'short']
+                hair = random.choice(hairs) + ' hair'
+                self.all_prompts[i] = self.all_prompts[i].replace('hairx', hair)
         ###
 
     def get_conds_with_caching(self, function, required_prompts, steps, cache):
