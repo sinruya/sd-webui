@@ -319,8 +319,8 @@ class StableDiffusionProcessing:
         ###
         for i in range(len(self.all_prompts)):
             colors = ['white', 'black', 'red', 'green', 'blue', 'yellow', 'orange', 'pink', 'purple', 'gray', 'brown',
-                      'violet', 'navy', 'teal', 'aqua', 'olive', 'fuchsia', 'maroon', 'springgreen', 
-                      'palegreen', 'azure', 'coral', 'aliceblue', 'beige', 'bisque'] 
+                      'violet', 'navy', 'teal', 'aqua', 'olive', 'fuchsia', 'maroon', 
+                      'palegreen', 'azure', 'aliceblue', 'beige', 'bisque'] 
             if 'color1' in self.all_prompts[i]:
                 color1 = random.choice(colors)
                 colors.remove(color1)
