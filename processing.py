@@ -185,6 +185,10 @@ class StableDiffusionProcessing:
         self.uc = None
         self.c = None
 
+        ###
+        self.rds = False
+        ###
+
     @property
     def sd_model(self):
         return shared.sd_model
@@ -317,6 +321,8 @@ class StableDiffusionProcessing:
         self.all_negative_prompts = [shared.prompt_styles.apply_negative_styles_to_prompt(x, self.styles) for x in self.all_negative_prompts]
 
         ###
+        if 'lora:rds' in self.all_prompts[0]:
+            self.rds = True 
         for i in range(len(self.all_prompts)):
             colors = ['white', 'black', 'red', 'green', 'blue', 'yellow', 'orange', 'pink', 'purple', 'brown',
                       'violet', 'navy', 'teal', 'aqua', 'fuchsia', 'maroon', 
@@ -360,11 +366,11 @@ class StableDiffusionProcessing:
         return cache[1]
 
     def setup_conds(self, iter=-1):
-        ### TODO add condition with keyword rds
+        ###
         f_list = [0.5, 0.6, 0.7, 0.8, 0.9]
-        if iter > -1:
+        if iter > -1 and self.rds:
             self.denoising_strength = f_list[iter % 5]
-            print(iter, self.denoising_strength)
+        print(self.rds, self.denoising_strength)
         ###
 
         sampler_config = sd_samplers.find_sampler_config(self.sampler_name)
