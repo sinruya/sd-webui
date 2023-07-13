@@ -318,7 +318,7 @@ class StableDiffusionProcessing:
 
         ###
         for i in range(len(self.all_prompts)):
-            colors = ['white', 'black', 'red', 'green', 'blue', 'yellow', 'orange', 'pink', 'purple', 'gray', 'brown',
+            colors = ['white', 'black', 'red', 'green', 'blue', 'yellow', 'orange', 'pink', 'purple', 'brown',
                       'violet', 'navy', 'teal', 'aqua', 'fuchsia', 'maroon', 
                       'palegreen', 'azure', 'aliceblue', 'beige', 'bisque'] 
             if 'color1' in self.all_prompts[i]:
@@ -359,7 +359,14 @@ class StableDiffusionProcessing:
         cache[0] = (required_prompts, steps)
         return cache[1]
 
-    def setup_conds(self):
+    def setup_conds(self, iter=-1):
+        ### TODO add condition with keyword rds
+        f_list = [0.5, 0.6, 0.7, 0.8, 0.9]
+        if iter > -1:
+            self.denoising_strength = f_list[iter % 5]
+            print(iter, self.denoising_strength)
+        ###
+
         sampler_config = sd_samplers.find_sampler_config(self.sampler_name)
         self.step_multiplier = 2 if sampler_config and sampler_config.options.get("second_order", False) else 1
 
@@ -763,7 +770,7 @@ def process_images_inner(p: StableDiffusionProcessing) -> Processed:
                     processed = Processed(p, [], p.seed, "")
                     file.write(processed.infotext(p, 0))
 
-            p.setup_conds()
+            p.setup_conds(n)
 
             if len(model_hijack.comments) > 0:
                 for comment in model_hijack.comments:
