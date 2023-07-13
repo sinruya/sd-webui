@@ -367,7 +367,7 @@ class StableDiffusionProcessing:
 
     def setup_conds(self, iter=-1):
         ###
-        f_list = [0.5, 0.6, 0.7, 0.8, 0.9]
+        f_list = [0.9, 0.8, 0.7, 0.6, 0.5]
         if iter > -1 and self.rds:
             self.denoising_strength = f_list[iter % 5]
         print(self.rds, self.denoising_strength)
