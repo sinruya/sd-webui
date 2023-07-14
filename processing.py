@@ -366,7 +366,7 @@ class StableDiffusionProcessing:
                 hair = random.choice(hairs) + ' hair'
                 self.all_prompts[i] = self.all_prompts[i].replace('hairx', hair)
             if use_random_lora:
-                loras = ['lora:taiwanDollLikeness_v20', 'lora:koreanDollLikeness', 'lora:JapaneseDollLikeness_v15']
+                loras = ['lora:taiwanDollLikeness_v20', 'lora:JapaneseDollLikeness_v15']
                 lora = random.choice(loras)
                 self.all_prompts[i] = self.all_prompts[i].replace(lora + ':0', lora + lora_value)
                 print(i, lora + lora_value)
