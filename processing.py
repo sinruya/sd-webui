@@ -322,11 +322,33 @@ class StableDiffusionProcessing:
 
         ###
         if 'lora:rds' in self.all_prompts[0]:
-            self.rds = True 
+            self.rds = True
+        use_random_lora = False
+        if 'lora:rl' in self.all_prompts[0]:
+            use_random_lora = True
+        lora_value = ':0.5'
+        if 'lora:rl:0.1' in self.all_prompts[0]:
+            lora_value = ':0.1'
+        if 'lora:rl:0.2' in self.all_prompts[0]:
+            lora_value = ':0.2'
+        if 'lora:rl:0.3' in self.all_prompts[0]:
+            lora_value = ':0.3'
+        if 'lora:rl:0.4' in self.all_prompts[0]:
+            lora_value = ':0.4'
+        if 'lora:rl:0.6' in self.all_prompts[0]:
+            lora_value = ':0.6'
+        if 'lora:rl:0.7' in self.all_prompts[0]:
+            lora_value = ':0.7'
+        if 'lora:rl:0.8' in self.all_prompts[0]:
+            lora_value = ':0.8'
+        if 'lora:rl:0.9' in self.all_prompts[0]:
+            lora_value = ':0.9'
+        if 'lora:rl:1' in self.all_prompts[0]:
+            lora_value = ':1'
         for i in range(len(self.all_prompts)):
             colors = ['white', 'black', 'red', 'green', 'blue', 'yellow', 'orange', 'pink', 'purple', 'brown',
                       'violet', 'navy', 'teal', 'aqua', 'fuchsia', 'maroon', 
-                      'palegreen', 'azure', 'aliceblue', 'beige', 'bisque'] 
+                      'palegreen', 'azure', 'aliceblue', 'beige'] 
             if 'color1' in self.all_prompts[i]:
                 color1 = random.choice(colors)
                 colors.remove(color1)
@@ -343,6 +365,11 @@ class StableDiffusionProcessing:
                 hairs = ['long', 'short', 'long', 'long', 'short', 'long', 'long', 'short']
                 hair = random.choice(hairs) + ' hair'
                 self.all_prompts[i] = self.all_prompts[i].replace('hairx', hair)
+            if use_random_lora:
+                loras = ['lora:taiwanDollLikeness_v20', 'lora:koreanDollLikeness', 'lora:JapaneseDollLikeness_v15']
+                lora = random.choice(loras)
+                self.all_prompts[i] = self.all_prompts[i].replace(lora + ':0', lora + lora_value)
+                print(i, lora + lora_value)
         ###
 
     def get_conds_with_caching(self, function, required_prompts, steps, cache):
